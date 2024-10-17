@@ -20,6 +20,12 @@ const Navbar = () => {
       >
         Upload Images
       </div>
+            <div 
+        onClick={() => { navigate("/") }} 
+        className={`transition-all cursor-pointer hover:font-bold ${location.pathname === "/" ? "font-bold" : ""}`}
+      >
+        Database
+      </div>
     </div>
   );
 }
