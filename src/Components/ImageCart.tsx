@@ -25,33 +25,33 @@ const ImageCart = () => {
   };
 
   return (
-    <div className='h-[90vh] flex flex-wrap content-start overflow-y-scroll gap-20 p-4 sm:gap-x-6'>
+    <div className='h-[90vh] flex flex-wrap content-start overflow-y-scroll gap-8 p-4 sm:gap-x-6'>
       {AllImages.length > 0 ? (
         AllImages.map((item) => (
           <div 
-            className='w-full h-fit sm:w-[28rem] relative hover:cursor-pointer' 
+            className='w-full sm:w-[20rem] relative hover:cursor-pointer' 
             key={item._id}
           >
-            <LazyLoadImage 
-              className='aspect-video w-full hover:scale-110 hover:rotate-2 transition-transform duration-200' 
-              src={item.imageurl} 
-              alt={item.title || "No Title Available"}
-              onClick={() => handleImageClick(item._id)}
-            />
-            <div className='flex justify-between items-start absolute w-full'>
-              <div className='bg-white shadow-lg py-3 flex items-center justify-between w-full transition-colors px-2 hover:bg-slate-400'>
-                <div className='text-sm max-w-[20rem] overflow-hidden whitespace-nowrap text-ellipsis'>
-                  {item.title || "No Title Available"}
+            <div className='group relative overflow-hidden rounded-lg shadow-lg'>
+              <LazyLoadImage 
+                className='aspect-video w-full object-cover transform transition-transform duration-300 ease-in-out hover:scale-105 hover:rotate-1' 
+                src={item.imageurl} 
+                alt={item.title || "No Title Available"}
+                onClick={() => handleImageClick(item._id)}
+              />
+              <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                <div className='absolute bottom-0 left-0 w-full p-4 text-white bg-black bg-opacity-70'>
+                  <div className='text-sm truncate'>{item.title || "No Title Available"}</div>
+                  <button 
+                    onClick={() => { 
+                      setselectedImageId(item._id);
+                      setselectedImageTitle(item.title);
+                    }}
+                    className='text-2xl font-bold mt-2 float-right'
+                  >
+                    <SlOptionsVertical />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => { 
-                    setselectedImageId(item._id);
-                    setselectedImageTitle(item.title);
-                  }}
-                  className='text-2xl font-bold'
-                >
-                  <SlOptionsVertical />
-                </button>
               </div>
             </div>
             {selectedImageId === item._id && <Model />}
