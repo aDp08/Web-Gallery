@@ -26,7 +26,7 @@ const ImageCart = () => {
     setselectedImageId(_id);
   };
 
-  const toggleLike = (_id) => {
+  const toggleLike = (_id: string) => {
     setLikedImages((prevLikes) =>
       prevLikes.includes(_id) ? prevLikes.filter((id) => id !== _id) : [...prevLikes, _id]
     );
@@ -41,7 +41,7 @@ const ImageCart = () => {
             key={item._id}
           >
             {/* 3D Tilt + Zoom on Hover */}
-            <div className='group relative overflow-hidden rounded-xl shadow-lg transform perspective-500 hover:rotate-y-3 hover:rotate-x-1 transition-transform duration-500'>
+            <div className='group relative overflow-hidden rounded-xl shadow-lg transform perspective-500 hover:scale-105 transition-transform duration-500'>
               <LazyLoadImage
                 className='aspect-video w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110'
                 src={item.imageurl}
