@@ -1,67 +1,33 @@
-import { useContext, useEffect } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { SlOptionsVertical } from 'react-icons/sl';
-import { AppContext } from '../Context/AppContext';
-import Model from './Model';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const ImageCart = () => {
-  const context = useContext(AppContext);
-
-  if (!context) {
-    return <div>Error: Context not available.</div>;
-  }
-
-  const { AllImages, getimages, setselectedImageId, selectedImageId, setselectedImageTitle } = context;
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      await getimages();
-    };
-    fetchImages();
-  }, [getimages]);
-
-  const handleImageClick = (_id: string) => {
-    setselectedImageId(_id);
-  };
+const Navbar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location.pathname);
 
   return (
-    <div className='h-[90vh] flex flex-wrap content-start overflow-y-scroll gap-8 p-4 sm:gap-x-6'>
-      {AllImages.length > 0 ? (
-        AllImages.map((item) => (
-          <div 
-            className='w-full sm:w-[20rem] relative hover:cursor-pointer' 
-            key={item._id}
-          >
-            <div className='group relative overflow-hidden rounded-lg shadow-lg'>
-              <LazyLoadImage 
-                className='aspect-video w-full object-cover transform transition-transform duration-300 ease-in-out hover:scale-105 hover:rotate-1' 
-                src={item.imageurl} 
-                alt={item.title || "No Title Available"}
-                onClick={() => handleImageClick(item._id)}
-              />
-              <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                <div className='absolute bottom-0 left-0 w-full p-4 text-white bg-black bg-opacity-70'>
-                  <div className='text-sm truncate'>{item.title || "No Title Available"}</div>
-                  <button 
-                    onClick={() => { 
-                      setselectedImageId(item._id);
-                      setselectedImageTitle(item.title);
-                    }}
-                    className='text-2xl font-bold mt-2 float-right'
-                  >
-                    <SlOptionsVertical />
-                  </button>
-                </div>
-              </div>
-            </div>
-            {selectedImageId === item._id && <Model />}
-          </div>
-        ))
-      ) : (
-        <div>No images available</div>
-      )}
+    <div className='flex justify-center gap-4 sm:gap-8 h-16 items-center text-white bg-black p-2 sm:p-4'>
+      <div 
+        onClick={() => { navigate("/") }} 
+        className={`transition-all cursor-pointer hover:font-bold ${location.pathname === "/" ? "font-bold" : ""}`}
+      >
+        All Images
+      </div>
+      <div 
+        onClick={() => { navigate("/upload") }} 
+        className='transition-all cursor-pointer hover:font-bold'
+      >
+        Upload Images
+      </div>
+      {/* New Database Tab */}
+      <div 
+        onClick={() => { navigate("/database") }} 
+        className={`transition-all cursor-pointer hover:font-bold ${location.pathname === "/database" ? "font-bold" : ""}`}
+      >
+        Database
+      </div>
     </div>
   );
-};
+}
 
-export default ImageCart;
+export default Navbar;
